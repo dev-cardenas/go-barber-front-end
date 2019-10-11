@@ -6,8 +6,9 @@ import logo from '~/assets/logo.svg';
 
 export default function SignIn() {
   function handleSubmit(data) {
-    console.log(data);
+    console.tron.log(data);
   }
+
   return (
     <>
       <img src={logo} alt="Logo-go-barber" />
