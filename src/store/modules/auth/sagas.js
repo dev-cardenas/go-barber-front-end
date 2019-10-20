@@ -28,4 +28,33 @@ export function* signIn({ payload }) {
   }
 }
 
-export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);
+export function* signUp({ payload }) {
+  try {
+    const { name, email, password } = payload;
+
+    const response = yield call(api.post, 'users', {
+      name,
+      email,
+      password,
+      provider: true,
+    });
+
+    history.push('/');
+
+    // const { token, user } = response.data;
+    // if (!user.provider) {
+    //   toast.error('Usuario no es un prestador de servicios');
+    //   return;
+    // }
+
+    // yield put(signInSuccess(token, user));
+  } catch (err) {
+    toast.error('Falla en cadastrarse, verifique sus datos');
+    yield put(signInFailured());
+  }
+}
+
+export default all([
+  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+]);
