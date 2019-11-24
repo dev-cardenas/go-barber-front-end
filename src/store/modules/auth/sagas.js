@@ -34,22 +34,21 @@ export function* signUp({ payload }) {
   try {
     const { name, email, password } = payload;
 
-    yield call(api.post, 'users', {
+    const response = yield call(api.post, 'users', {
       name,
       email,
       password,
       provider: true,
     });
 
-    history.push('/');
+    const { token, user } = response.data;
+    if (!user.provider) {
+      toast.error('Usuario no es un prestador de servicios');
+      return;
+    }
 
-    // const { token, user } = response.data;
-    // if (!user.provider) {
-    //   toast.error('Usuario no es un prestador de servicios');
-    //   return;
-    // }
-
-    // yield put(signInSuccess(token, user));
+    yield put(signInSuccess(token, user));
+    history.push('/dashboard');
   } catch (err) {
     toast.error('Falla en cadastrarse, verifique sus datos');
     yield put(signInFailured());
@@ -59,9 +58,9 @@ export function* signUp({ payload }) {
 export function setToken({ payload }) {
   if (!payload) return;
 
-  const { token } = payload;
+  const { token } = payload.auth;
   if (token) {
-    api.default.headers['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
   }
 }
 
