@@ -1,13 +1,19 @@
 import React from 'react';
-// import { MdNotifications } from 'react-icons/md';
+import { MdNotifications } from 'react-icons/md';
 //
-import { Container, Badge, NotificationsList, Notification } from './styles';
+import {
+  Container,
+  Badge,
+  NotificationsList,
+  Scroll,
+  Notification,
+} from './styles';
 
 export default function Notifications() {
   return (
     <Container>
       <Badge hasUnRead>
-        {/* <MdNotifications color="#7159c1" size={20} /> */}
+        <MdNotifications color="#7159c1" size={20} />
       </Badge>
       <NotificationsList>
         <Scroll>
