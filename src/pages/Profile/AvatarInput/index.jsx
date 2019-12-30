@@ -11,17 +11,18 @@ export default function AvatarInput() {
   const [file, setFile] = useState(defaultValue && defaultValue.id);
   const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
-  const ref = useRef();
+  const ref = useRef(null);
 
   useEffect(() => {
-    if (ref.current) {
+    console.log(ref);
+    if (ref.current.files) {
       registerField({
         name: 'avatar_id',
         ref: ref.current,
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField]);
+  }, [ref]);
 
   async function handleChange(e) {
     const data = new FormData();
